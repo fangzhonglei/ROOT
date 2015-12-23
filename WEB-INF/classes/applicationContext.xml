@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		">
+	
+	<!-- 配置Handler -->
+	<!-- <bean id="itemsController1" name="/queryItems.action" class="sbi.xwb.weixin.controller.ItemController"/> -->
+	<!-- <bean id="itemsController2" class="sbi.xwb.weixin.controller.ItemController2"/> -->
+	
+	<!-- 对于注解的handler可以单个配置
+		 实际开发中建议使用组件扫描
+	 -->
+	<!-- <bean class="sbi.xwb.weixin.controller.ItemController3"/> -->
+	
+	<context:component-scan base-package="sbi.xwb.weixin.controller"/>
+	<context:component-scan base-package="sbi.xwb.weixin.service"/>
+	
+	<!-- 静态资源解析包括：js、css、img、..... -->
+	
+	<!-- 将静态文件指定到某个特殊的文件夹中统一处理 -->
+	<mvc:resources location="/resources/" mapping="/resources/**" />
+	
+		
+	<bean id="menuLoader" class="sbi.xwb.weixin.manager.MenuLoader" init-method="loader">
+	    <constructor-arg name="appID" value="wx5d351a6db0ac77f8"/>
+	    <constructor-arg name="appSecret" value="ac9acfe1e08589575acf22223546b108"/>
+	</bean>
+	
+	<!-- 处理器映射器
+			所有的映射器都实现HandlerMapping接口
+		 将bean的name作为url进行查找，需要在配置Handler时指定beanname(就是url)-->
+<!-- 	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/> -->
+	
+	<!-- 简单url映射器
+	 	            所有的映射器都实现HandlerMapping接口
+	 -->
+	<!-- <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+		    <props>
+		        <prop key="/queryItems1.action">itemsController1</prop>
+		        <prop key="/queryItems2.action">itemsController1</prop>
+		        <prop key="/queryItems22.action">itemsController2</prop>
+		    </props>
+		</property>	    
+	</bean> -->
+	
+	
+	<!-- 处理器适配器
+		 
+		   所有处理器适配器都实现HandlerAdapter接口 -->
+<!-- 	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/> -->
+	
+	<!-- 另一个处理器适配器 -->
+	
+<!-- 	<bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"/> -->
+	
+	<!-- 
+	注解映射器
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+	 注解适配器 
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" />
+	 -->
+	 
+	<!-- 使用mvc:annotation-driven代替上面注解映射器和注解适配器配置 
+			mvc:annotation-driven默认加载很多的参数绑定方法，比如json转换解析器就默认加载了，
+			如果使用mvc:annotation-driven不用配置上边的RequestMappingHandlerMapping和RequestMappingHandlerAdapter
+			实际开发时使用mvc:annotation-driven
+	-->
+	
+	<mvc:annotation-driven conversion-service="conversionService" validator="validator"/>
+	
+		<!-- 校验器 -->
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+	    <!-- 校验器 -->
+	    <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+	    <!-- 指定校验使用的资源文件，如果不指定则默认使用classpath下的ValidationMessages.properties
+	     -->
+	     <property name="validationMessageSource" ref="messageSource"></property>
+	</bean>
+	
+	
+	<!-- 校验错误信息配置文件 -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+	    <!-- 资源文件名 -->
+	    <property name="basenames">
+	        <list>
+	            <value>classpath:CustomValidationMessages</value>
+	        </list>
+	    </property>
+	    <!-- 资源文件编码格式 -->
+	    <property name="fileEncodings" value="utf-8"/>
+	    <!-- 对资源文件内容缓存时间，单位秒 -->
+	    <property name="cacheSeconds" value="120"/>
+	</bean>
+	
+	
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+	    <!-- 转换器 -->
+	    <property name="converters">
+	        <list>
+	            <bean class="sbi.xwb.weixin.controller.converter.CustomDateConverter"></bean>
+	        </list>
+	    </property>
+	</bean>
+	
+	<!-- 视图解析器
+		 解析jsp解析，默认使用jstl标签，classpath下必须有jstl的包
+	  -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<!-- 全局异常处理器 
+	只要实现HandlerExceptionResolver接口就是全局异常处理器
+	-->
+	<bean class="sbi.xwb.weixin.controller.exception.CustomExceptionResolver"></bean>
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	    <property name="maxUploadSize">
+	        <value>5242880</value>
+	    </property>
+	</bean>
+	
+	<!-- 拦截器 -->
+	<mvc:interceptors>
+	    <mvc:interceptor>
+	        <mvc:mapping path="/**/"/>
+	        <bean class="sbi.xwb.weixin.interceptor.LoginInterceptor"/>
+	    </mvc:interceptor>
+	    <!-- 多个拦截器，顺序执行 -->
+	    <mvc:interceptor>
+	        <!-- /**表示所有url包括子url路径 -->
+	        <mvc:mapping path="/**"/>
+	        <bean class="sbi.xwb.weixin.interceptor.HandlerInterceptor1"/>
+	    </mvc:interceptor>
+	    <mvc:interceptor>
+	        <mvc:mapping path="/**"/>
+	        <bean class="sbi.xwb.weixin.interceptor.HandlerInterceptor2"/>
+	    </mvc:interceptor>
+	</mvc:interceptors>
+	
+	
+<!-- 	<import resource="spring/applicationContext-mybatis.xml" /> -->
+	<import resource="spring/applicationContext-common.xml" />
+	<import resource="spring/applicationContext-message.xml" />
+	<import resource="spring/applicationContext-menu.xml" />
+</beans>
