@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/repos/!svn/ver/122/xwbweixin/src/main/webapp/WEB-INF/jsp/common
+END
+return_form.jspf
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/repos/!svn/ver/122/xwbweixin/src/main/webapp/WEB-INF/jsp/common/return_form.jspf
+END
+nopass_form.jspf
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/repos/!svn/ver/122/xwbweixin/src/main/webapp/WEB-INF/jsp/common/nopass_form.jspf
+END
+pass_form.jspf
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/repos/!svn/ver/122/xwbweixin/src/main/webapp/WEB-INF/jsp/common/pass_form.jspf
+END

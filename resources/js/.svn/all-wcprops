@@ -1,13 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
-V 62
-/svn/repos/!svn/ver/122/xwbweixin/src/main/webapp/resources/js
-END
-jquery-1.7.2.min.js
-K 25
-svn:wc:ra_dav:version-url
-V 81
-/svn/repos/!svn/ver/24/xwbweixin/src/main/webapp/resources/js/jquery-1.7.2.min.js
+V 61
+/svn/repos/!svn/ver/24/xwbweixin/src/main/webapp/resources/js
 END
 main.js
 K 25

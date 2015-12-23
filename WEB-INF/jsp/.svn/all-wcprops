@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/repos/!svn/ver/21/xwbweixin/src/main/webapp/WEB-INF/jsp
+END
+login.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/repos/!svn/ver/122/xwbweixin/src/main/webapp/WEB-INF/jsp/login.jsp
+END
+error.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/repos/!svn/ver/122/xwbweixin/src/main/webapp/WEB-INF/jsp/error.jsp
+END
+login1.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/repos/!svn/ver/122/xwbweixin/src/main/webapp/WEB-INF/jsp/login1.jsp
+END
+authorize.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/repos/!svn/ver/95/xwbweixin/src/main/webapp/WEB-INF/jsp/authorize.jsp
+END
+error1.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/repos/!svn/ver/122/xwbweixin/src/main/webapp/WEB-INF/jsp/error1.jsp
+END
+autherror.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/repos/!svn/ver/95/xwbweixin/src/main/webapp/WEB-INF/jsp/autherror.jsp
+END
+oauth2.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/repos/!svn/ver/95/xwbweixin/src/main/webapp/WEB-INF/jsp/oauth2.jsp
+END
